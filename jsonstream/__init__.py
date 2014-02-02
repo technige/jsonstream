@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright 2013, Nigel Small
+# Copyright 2013-2014, Nigel Small
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,11 +21,15 @@ JSONStream
 """
 
 
+__all__ = ["__author__", "__copyright__", "__email__", "__license__",
+           "__version__", "AwaitingData", "EndOfStream", "UnexpectedCharacter",
+           "JSONStream", "assembled", "grouped"]
+
 __author__ = "Nigel Small"
 __copyright__ = "2013, Nigel Small"
 __email__ = "nigel@nigelsmall.com"
 __license__ = "Apache License, Version 2.0"
-__version__ = "0.9.0"
+__version__ = "0.9.1"
 
 
 import sys as __sys
