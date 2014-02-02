@@ -20,7 +20,7 @@ BASE=`dirname $0`/..
 cd $BASE
 bin/build
 
-TEST_OPTIONS="--cov pyjsonstream --cov-report term-missing $*"
+TEST_OPTIONS="--cov jsonstream --cov-report term-missing $*"
 
 echo ""
 echo "######################################################"

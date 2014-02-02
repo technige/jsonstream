@@ -16,12 +16,11 @@
 # limitations under the License.
 
 
-from importlib import import_module
 import os
 import sys
 sys.path.insert(0, os.path.abspath(".."))
 
 
 def jsonstream_import(name):
-    jsonstream = import_module(os.environ["JSONSTREAM_MODULE"])
+    jsonstream = __import__(os.environ["JSONSTREAM_MODULE"])
     return getattr(jsonstream, name)
