@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Copyright 2014 Nigel Small
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+BASE=`dirname $0`/..
+if [ $# -eq 0 ]
+then
+    COUNT=10
+else
+    COUNT=$1
+fi
+TIME=/usr/bin/time
+
+cd $BASE
+bin/compile
+
+echo ""
+
+echo    " module         | cpu time "
+echo    "----------------+----------"
+
+echo -n " simplejson     | "
+SIMPLEJSON_TIME=`$TIME --f "%U " python3.3 -m benchmark.simplejson $COUNT`
+echo -n $SIMPLEJSON_TIME
+
+echo -n " pyjsonstream   | "
+PYJSONSTREAM_TIME=`$TIME --f "%U " python3.3 -m benchmark.pyjsonstream $COUNT`
+echo -n $PYJSONSTREAM_TIME
+
+echo -n " cjsonstream_2x | "
+CJSONSTREAM_2X_TIME=`$TIME --f "%U " python2.7 -m benchmark.cjsonstream_2x $COUNT`
+echo -n $CJSONSTREAM_2X_TIME
+
+echo -n " cjsonstream    | "
+CJSONSTREAM_TIME=`$TIME --f "%U " python3.3 -m benchmark.cjsonstream $COUNT`
+echo -n $CJSONSTREAM_TIME
+
+echo ""
