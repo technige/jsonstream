@@ -24,7 +24,9 @@ Quick Start
 
 ::
 
-    >>> pass
+    >>> from jsonstream import JSONStream
+    >>> list(JSONStream(['["hello", "world"]']))
+    [((), []), ((0,), 'hello'), ((1,), 'world')]
 
 
 Further Reading
