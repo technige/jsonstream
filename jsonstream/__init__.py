@@ -33,11 +33,23 @@ import sys as __sys
 
 if __sys.version_info >= (3,):
     try:
-        from .cjsonstream import JSONStream, assembled, grouped
+        from .cjsonstream import (
+            AwaitingData, EndOfStream, UnexpectedCharacter, TextStream,
+            Tokeniser, JSONStream, assembled, grouped
+        )
     except ImportError:
-        from .pyjsonstream import JSONStream, assembled, grouped
+        from .pyjsonstream import (
+            AwaitingData, EndOfStream, UnexpectedCharacter, TextStream,
+            Tokeniser, JSONStream, assembled, grouped
+        )
 else:
     try:
-        from .cjsonstream_2x import JSONStream, assembled, grouped
+        from .cjsonstream_2x import (
+            AwaitingData, EndOfStream, UnexpectedCharacter, TextStream,
+            Tokeniser, JSONStream, assembled, grouped
+        )
     except ImportError:
-        from .pyjsonstream import JSONStream, assembled, grouped
+        from .pyjsonstream import (
+            AwaitingData, EndOfStream, UnexpectedCharacter, TextStream,
+            Tokeniser, JSONStream, assembled, grouped
+        )

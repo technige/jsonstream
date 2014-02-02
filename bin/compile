@@ -18,10 +18,10 @@
 BASE=`dirname $0`/..
 OPTIONS="-shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing"
 
+cd $BASE
+
 # Compile for Python 3.3
-cython -3 $BASE/jsonstream/cjsonstream.pyx
-gcc $OPTIONS -I/usr/include/python3.3 -o $BASE/jsonstream/cjsonstream.so $BASE/jsonstream/cjsonstream.c
+gcc $OPTIONS -I/usr/include/python3.3 -o jsonstream/cjsonstream.so jsonstream/cjsonstream.c
 
 # Compile for Python 2.7
-cython -2 $BASE/jsonstream/cjsonstream_2x.pyx
-gcc $OPTIONS -I/usr/include/python2.7 -o $BASE/jsonstream/cjsonstream_2x.so $BASE/jsonstream/cjsonstream_2x.c
+gcc $OPTIONS -I/usr/include/python2.7 -o jsonstream/cjsonstream_2x.so jsonstream/cjsonstream_2x.c

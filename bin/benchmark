@@ -25,7 +25,7 @@ fi
 TIME=/usr/bin/time
 
 cd $BASE
-bin/compile
+bin/build
 
 echo ""
 

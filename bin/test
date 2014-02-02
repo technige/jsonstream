@@ -20,25 +20,6 @@ BASE=`dirname $0`/..
 cd $BASE
 bin/compile
 
-TEST_OPTIONS="--cov pyjsonstream --cov-report term-missing $*"
+TEST_OPTIONS="$*"
 
-echo ""
-echo "######################################################"
-echo "# Testing pure Python implementation (jsonstream.py) #"
-echo "######################################################"
-echo ""
-JSONSTREAM_MODULE="jsonstream.pyjsonstream" python3.3 -m pytest $TEST_OPTIONS
-
-echo ""
-echo "######################################################################"
-echo "# Testing compiled implementation for Python 2.x (cjsonstream_2x.so) #"
-echo "######################################################################"
-echo ""
-JSONSTREAM_MODULE="jsonstream.cjsonstream_2x" python2.7 -m pytest $TEST_OPTIONS
-
-echo ""
-echo "###################################################################"
-echo "# Testing compiled implementation for Python 3.x (cjsonstream.so) #"
-echo "###################################################################"
-echo ""
-JSONSTREAM_MODULE="jsonstream.cjsonstream" python3.3 -m pytest $TEST_OPTIONS
+JSONSTREAM_MODULE="jsonstream" python -m pytest $TEST_OPTIONS
