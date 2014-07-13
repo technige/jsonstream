@@ -61,6 +61,21 @@ def test_single_string_value():
     ]
 
 
+def test_string_value_in_multiple_parts():
+    assert _jsonstream('"super', 'cali', 'fragi', 'listic', 'expi', 'ali', 'docious"') == [
+        ((), "supercalifragilisticexpialidocious"),
+    ]
+
+
+def test_long_string_values_in_array():
+    assert _jsonstream('["super', 'cali', 'fragi', 'listic', 'expi', 'ali', 'docious", "pneu',
+                       'monoultra', 'microscopic', 'silicovolcano', '', 'coniosis"]') == [
+        ((), []),
+        ((0,), "supercalifragilisticexpialidocious"),
+        ((1,), "pneumonoultramicroscopicsilicovolcanoconiosis"),
+    ]
+
+
 def test_array():
     assert _jsonstream('["foo", "bar"]') == [
         ((), []),

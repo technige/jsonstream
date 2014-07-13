@@ -63,8 +63,8 @@ class TextStream:
         self.__current_line = 0
         self.__current_char = 0
         self.__writable = True
-        self.__marked_line = 0
-        self.__marked_char = 0
+        self.__marked_line = -1
+        self.__marked_char = -1
 
     def close(self):
         self.__writable = False
@@ -130,29 +130,6 @@ class TextStream:
             else:
                 return "".join(out)
 
-    #def read_until(self, marker):
-    #    out = []
-    #    line = self.__current_line
-    #    start = self.__current_char
-    #    while True:
-    #        try:
-    #            end = self.__data[line].index(marker, start)
-    #        except IndexError:  # no more lines
-    #            if self.__writable:
-    #                raise AwaitingData()
-    #            else:
-    #                raise EndOfStream()
-    #        except ValueError:  # not found
-    #            out.append(self.__data[line][start:])
-    #            line += 1
-    #            start = 0
-    #        else:
-    #            # found
-    #            self.__current_line = line
-    #            self.__current_char = end + 1
-    #            out.append(self.__data[line][start:self.__current_char])
-    #            return "".join(out)
-
     def read_until_any(self, markers):
         out = []
         line = self.__current_line
@@ -209,6 +186,15 @@ class TextStream:
         if data:
             # so we can guarantee no line is empty
             self.__data.append(data)
+        # clean up old data
+        if self.__marked_line == -1:
+            self.__data = self.__data[self.__current_line:]
+            self.__current_line = 0
+        else:
+            min_line = min(self.__current_line, self.__marked_line)
+            self.__data = self.__data[min_line:]
+            self.__current_line -= min_line
+            self.__marked_line -= min_line
 
     def mark(self):
         self.__marked_line = self.__current_line
@@ -217,6 +203,8 @@ class TextStream:
     def undo(self):
         self.__current_line = self.__marked_line
         self.__current_char = self.__marked_char
+        self.__marked_line = -1
+        self.__marked_char = -1
 
 
 class Tokeniser(object):

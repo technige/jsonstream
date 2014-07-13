@@ -67,8 +67,8 @@ cdef class TextStream:
         self.__current_line = 0
         self.__current_char = 0
         self.__writable = True
-        self.__marked_line = 0
-        self.__marked_char = 0
+        self.__marked_line = -1
+        self.__marked_char = -1
 
     cpdef close(self):
         self.__writable = False
@@ -199,6 +199,15 @@ cdef class TextStream:
         if data:
             # so we can guarantee no line is empty
             self.__data.append(data)
+        # clean up old data
+        if self.__marked_line == -1:
+            self.__data = self.__data[self.__current_line:]
+            self.__current_line = 0
+        else:
+            min_line = min(self.__current_line, self.__marked_line)
+            self.__data = self.__data[min_line:]
+            self.__current_line -= min_line
+            self.__marked_line -= min_line
 
     cpdef mark(self):
         self.__marked_line = self.__current_line
@@ -207,7 +216,8 @@ cdef class TextStream:
     cpdef undo(self):
         self.__current_line = self.__marked_line
         self.__current_char = self.__marked_char
-
+        self.__marked_line = -1
+        self.__marked_char = -1
 
 cdef class Tokeniser(object):
 
